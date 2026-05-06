@@ -1,0 +1,7 @@
+Prompt: A majestic bull, photorealistic, dramatic natural lighting, detailed fur texture, powerful stance, high quality
+Date: 2026-05-06
+References used: none (yuval/reference/ was empty)
+User request: צור לי תמונה של שור
+Model: gpt-image-2
+Size: 1024x1024
+Quality: medium
