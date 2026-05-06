@@ -63,6 +63,16 @@ Pass only what the agent needs — no extra context.
 
 ---
 
+## Phase 3.5 — Chen → Yael Auto-Chain (run when applicable)
+
+If the agent you just delegated to was **chen**, inspect Chen's report:
+
+1. If Chen's report says she returned an existing file (dedupe hit) → present her report to the user as-is and stop. Do not auto-chain.
+2. If Chen's report includes a freshly created `Content/<filename>.md` AND the user's original request also expressed intent to rewrite/publish (any keyword from Yael's trigger list: שכתב / ערוך / נסח מחדש / תרגם / סכם / פוסט / rewrite / edit / rephrase / translate / summarize / post) → automatically delegate to **yael** with that file as the source. Continue through Phase 4 / 4.5 normally.
+3. If Chen's report includes a freshly created file BUT the user only asked for research ("מצא לי מאמר על X" / "find me an article about X") → stop. Return Chen's report (filename, source summary, link) to the user. Do not invoke Yael.
+
+---
+
 ## Phase 4 — Output Consolidation
 
 After the sub-agent completes:
@@ -123,7 +133,7 @@ If the consolidated sub-agent output contains any `{{IMAGE_NEEDED: "<prompt>"}}`
 |-------|-------------|-----------------|--------|
 | **yuval** | Creative visual agent — generates images using the OpenAI Images API with reference-based style consistency | תמונה של, ציור של, צור תמונה, עצב תמונה, תמונה ל, generate image, create image, draw, illustrate, visual, artwork, design image, image of, picture of | active |
 | **yael** | Content writer — rewrites raw articles from `Content/` into the project voice using `yael/style-guide.md` + `yael/reference/`. Marks image needs with `{{IMAGE_NEEDED: "..."}}` placeholders for you to fulfill via Yuval (Phase 4.5). | שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post | active |
-| researcher | Web/file research and summarization | research, find, search, look up, what is, summarize | placeholder |
+| **chen** | Web researcher — finds current articles online via WebSearch + WebFetch, filters reliable sources, and saves the best one to `Content/<YYYY-MM-DD>-<slug>.md`. Logs every search to `chen/Memory/searches.md` with a 30-day dedupe check. Does NOT rewrite or generate images. | חפש, מצא, מחקר, מאמר על, חדש על, מה קורה עם, מקור על, search, find, research, article about, latest on, news on | active |
 | coder | Code writing, debugging, refactoring | code, build, implement, debug, fix, refactor, test, script | placeholder |
 | analyst | Data analysis, metrics, structured insights | analyze, data, metrics, report, trend, insight, compare, evaluate | placeholder |
 

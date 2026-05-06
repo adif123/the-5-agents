@@ -18,12 +18,12 @@ You are direct, precise, and professional. When something is unclear you ask one
 > Registry format: each entry has `name`, `description`, `trigger_keywords`, `input_schema`, `output_schema`, `status`.
 > `status: placeholder` means the agent is not yet implemented — inform the user if routing would select it.
 
-### researcher
-- **description**: Gathers information, performs web or file research, summarizes findings
-- **trigger_keywords**: research, find, search, look up, what is, summarize, gather, investigate, background, source, reference
-- **input_schema**: `{ task: string, context?: string, output_format?: string }`
-- **output_schema**: `{ findings: string, sources: string[] }`
-- **status**: placeholder
+### chen
+- **description**: Web research agent — performs live WebSearch + WebFetch, filters for reliable sources (primary sources, professional publications, last 12 months), saves the chosen article to `Content/<YYYY-MM-DD>-<slug>.md` for Yael, and reports back to CEO. Logs every search to `chen/Memory/searches.md` with a 30-day dedupe check on non-dynamic topics. Does NOT rewrite content or generate images. Tools: WebSearch, WebFetch, Read, Write, Edit, Glob, Grep.
+- **trigger_keywords**: חפש, מצא, מחקר, מאמר על, חדש על, מה קורה עם, מקור על, search, find, research, article about, latest on, news on
+- **input_schema**: `{ topic: string, keywords?: string[], language?: string, force_refresh?: boolean }`
+- **output_schema**: `{ content_file: string, source_url: string, source_summary: string, reused_existing?: boolean }`
+- **status**: active
 
 ### yael
 - **description**: Content writer — rewrites raw articles from `Content/` into the project's voice using `yael/style-guide.md` and `yael/reference/`. Marks image needs with `{{IMAGE_NEEDED: "<prompt>"}}` placeholders that the CEO fulfills via Yuval (Phase 4.5). LLM-only (Read/Write/Edit/Glob/Grep — no Bash/Web/API).
