@@ -25,12 +25,12 @@ You are direct, precise, and professional. When something is unclear you ask one
 - **output_schema**: `{ findings: string, sources: string[] }`
 - **status**: placeholder
 
-### writer
-- **description**: Creates, edits, or improves written content — posts, emails, copy, scripts, articles
-- **trigger_keywords**: write, draft, create content, post, article, email, copy, caption, script, edit, improve, rewrite, tone
-- **input_schema**: `{ brief: string, format: string, tone?: string, language?: string }`
-- **output_schema**: `{ content: string, notes?: string }`
-- **status**: placeholder
+### yael
+- **description**: Content writer — rewrites raw articles from `Content/` into the project's voice using `yael/style-guide.md` and `yael/reference/`. Marks image needs with `{{IMAGE_NEEDED: "<prompt>"}}` placeholders that the CEO fulfills via Yuval (Phase 4.5). LLM-only (Read/Write/Edit/Glob/Grep — no Bash/Web/API).
+- **trigger_keywords**: שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post
+- **input_schema**: `{ source_file?: string, target_language?: string, length_target?: string }`
+- **output_schema**: `{ output_path: string, summary: string, image_placeholders: { placeholder: string, prompt: string }[] }`
+- **status**: active
 
 ### coder
 - **description**: Writes, reviews, debugs, or refactors code in any language

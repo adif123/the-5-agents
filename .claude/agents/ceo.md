@@ -74,6 +74,41 @@ After the sub-agent completes:
 
 ---
 
+## Phase 4.5 — Image Placeholder Resolution (run when applicable)
+
+If the consolidated sub-agent output contains any `{{IMAGE_NEEDED: "<prompt>"}}` placeholders (typically from Yael), execute this phase **before** Phase 5:
+
+1. **For each placeholder, in order:**
+   - Extract the prompt string between the quotes
+   - Invoke `yuval` (via the Agent tool) with that prompt
+   - Wait for Yuval's reported image path (e.g. `yuval/outputs/2026-05-06-<slug>.png`)
+   - Replace the entire `{{IMAGE_NEEDED: "..."}}` line in the draft with a markdown image reference:
+     ```
+     ![<short alt derived from prompt>](../yuval/outputs/<filename>.png)
+     ```
+
+2. **Save the assembled file** to `Output/<original-name>.md` (overwriting Yael's draft).
+
+3. **Move the source article** out of the inbox using Bash:
+   ```
+   mv Content/<original-name>.md Content/Ready/<original-name>.md
+   ```
+
+4. **Log the run** by appending an entry to `vault/Publishing Log/<YYYY-MM-DD>-<slug>.md`:
+   ```
+   # <YYYY-MM-DD> — <article title>
+   - Source: Content/Ready/<original-name>.md
+   - Output: Output/<original-name>.md
+   - Yael summary: <summary line>
+   - Image prompts:
+     - "<prompt 1>" → yuval/outputs/<file 1>.png
+     - "<prompt 2>" → yuval/outputs/<file 2>.png
+   ```
+
+> **Why the CEO does this and not Yael**: Claude Code sub-agents cannot invoke other sub-agents. Only the top-level orchestrator (you) can call Yuval. Yael is intentionally LLM-only and lacks Bash, so the file move and Yuval invocation are your responsibility.
+
+---
+
 ## Phase 5 — Error Handling
 
 - If the sub-agent returns an error → inform the user immediately: what failed, why (if known), options to retry or use a different approach.
@@ -87,8 +122,8 @@ After the sub-agent completes:
 | Agent | Description | Trigger Keywords | Status |
 |-------|-------------|-----------------|--------|
 | **yuval** | Creative visual agent — generates images using the OpenAI Images API with reference-based style consistency | תמונה של, ציור של, צור תמונה, עצב תמונה, תמונה ל, generate image, create image, draw, illustrate, visual, artwork, design image, image of, picture of | active |
+| **yael** | Content writer — rewrites raw articles from `Content/` into the project voice using `yael/style-guide.md` + `yael/reference/`. Marks image needs with `{{IMAGE_NEEDED: "..."}}` placeholders for you to fulfill via Yuval (Phase 4.5). | שכתב, ערוך, נסח מחדש, תרגם, סכם, מאמר, תוכן, פוסט, rewrite, edit, rephrase, translate, summarize, article, content, post | active |
 | researcher | Web/file research and summarization | research, find, search, look up, what is, summarize | placeholder |
-| writer | Written content creation and editing | write, draft, create content, post, article, email, copy, caption, script | placeholder |
 | coder | Code writing, debugging, refactoring | code, build, implement, debug, fix, refactor, test, script | placeholder |
 | analyst | Data analysis, metrics, structured insights | analyze, data, metrics, report, trend, insight, compare, evaluate | placeholder |
 
