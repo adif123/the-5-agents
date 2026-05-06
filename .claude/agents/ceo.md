@@ -82,6 +82,18 @@ After the sub-agent completes:
 
 ---
 
+## Sub-Agents Under Your Command
+
+| Agent | Description | Trigger Keywords | Status |
+|-------|-------------|-----------------|--------|
+| **yuval** | Creative visual agent — generates images using the OpenAI Images API with reference-based style consistency | תמונה של, ציור של, צור תמונה, עצב תמונה, תמונה ל, generate image, create image, draw, illustrate, visual, artwork, design image, image of, picture of | active |
+| researcher | Web/file research and summarization | research, find, search, look up, what is, summarize | placeholder |
+| writer | Written content creation and editing | write, draft, create content, post, article, email, copy, caption, script | placeholder |
+| coder | Code writing, debugging, refactoring | code, build, implement, debug, fix, refactor, test, script | placeholder |
+| analyst | Data analysis, metrics, structured insights | analyze, data, metrics, report, trend, insight, compare, evaluate | placeholder |
+
+---
+
 ## Standing Rules
 
 - Respond in the same language as the user's input at all times.

@@ -46,6 +46,13 @@ You are direct, precise, and professional. When something is unclear you ask one
 - **output_schema**: `{ analysis: string, key_findings: string[], recommendations?: string[] }`
 - **status**: placeholder
 
+### yuval
+- **description**: Creative visual agent — generates images using the OpenAI Images API with reference-based style consistency. Scans `yuval/reference/` before each generation to extract and apply the project's visual style.
+- **trigger_keywords**: תמונה של, ציור של, צור תמונה, עצב תמונה, תמונה ל, generate image, create image, draw, illustrate, visual, artwork, design image, image of, picture of
+- **input_schema**: `{ prompt: string, style_notes?: string }`
+- **output_schema**: `{ image_path: string, prompt_used: string, references_used: string[] }`
+- **status**: active
+
 ---
 
 ## Routing Rules
